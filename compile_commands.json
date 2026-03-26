@@ -1,0 +1,104 @@
+[
+  {
+    "file": "g4d.cpp",
+    "arguments": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-I.",
+      "-I./include",
+      "-I./minizip",
+      "-fpermissive",
+      "-o",
+      "myapp",
+      "g4d.cpp"
+    ],
+    "directory": "/home/yldeveloper/projects/git4doc",
+    "output": "myapp"
+  },
+  {
+    "file": "src/ylfile.cpp",
+    "arguments": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-I.",
+      "-I./include",
+      "-I./minizip",
+      "-fpermissive",
+      "-o",
+      "myapp",
+      "src/ylfile.cpp"
+    ],
+    "directory": "/home/yldeveloper/projects/git4doc",
+    "output": "myapp"
+  },
+  {
+    "file": "minizip/ioapi.c",
+    "arguments": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-I.",
+      "-I./include",
+      "-I./minizip",
+      "-fpermissive",
+      "-o",
+      "myapp",
+      "minizip/ioapi.c"
+    ],
+    "directory": "/home/yldeveloper/projects/git4doc",
+    "output": "myapp"
+  },
+  {
+    "file": "minizip/mztools.c",
+    "arguments": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-I.",
+      "-I./include",
+      "-I./minizip",
+      "-fpermissive",
+      "-o",
+      "myapp",
+      "minizip/mztools.c"
+    ],
+    "directory": "/home/yldeveloper/projects/git4doc",
+    "output": "myapp"
+  },
+  {
+    "file": "minizip/unzip.c",
+    "arguments": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-I.",
+      "-I./include",
+      "-I./minizip",
+      "-fpermissive",
+      "-o",
+      "myapp",
+      "minizip/unzip.c"
+    ],
+    "directory": "/home/yldeveloper/projects/git4doc",
+    "output": "myapp"
+  },
+  {
+    "file": "minizip/zip.c",
+    "arguments": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-I.",
+      "-I./include",
+      "-I./minizip",
+      "-fpermissive",
+      "-o",
+      "myapp",
+      "minizip/zip.c"
+    ],
+    "directory": "/home/yldeveloper/projects/git4doc",
+    "output": "myapp"
+  }
+]
