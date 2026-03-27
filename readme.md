@@ -13,7 +13,7 @@ We actually unzip the doc file and format the `xml` files in the `{fileName}` fo
 ## Current state 
 
 - Version controlling for single `.doc` or `.docx` file
-- git `init` / `add` / `commit` / `diff` / `status`
+- git `init` / `add` / `commit` / `diff` / `status` / `reset`
 - Support for most *Linux* Systems
 - Raw output of commands `diff` for changes
 

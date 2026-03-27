@@ -9,21 +9,25 @@ void cmd_help() {
   printf("Usage:\n"
          "  g4d <command> [options] <document>\n\n"
          "Commands:\n"
-         "  init <document>              Initialize a Git repository for the "
+         "  init <document>                       Initialize a Git repository "
+         "for the "
          "document\n"
-         "  diff [options] <document>    Show changes"
+         "  diff [options] <document>             Show changes"
          "by default)\n"
-         "  add [files...] <document>    Stage changes\n"
-         "  commit [-m message] <document> Commit changes\n"
-         "  status <document>            Show working tree status\n"
-         "  log [options] <document>     Show commit history\n\n"
+         "  add [files...] <document>             Stage changes\n"
+         "  commit [-m message] <document>        Commit changes\n"
+         "  status <document>                     Show working tree status\n"
+         "  log [options] <document>              Show commit history\n"
+         "  reset [options] <commit> <document>   Reset to one commit\n\n"
          "Examples:\n"
          "  g4d init ./test/doc1.docx\n"
          "  g4d diff ./test/doc1.docx\n"
          "  g4d add document.xml ./test/doc1.docx\n"
          "  g4d commit -m \"Initial commit\" ./test/doc1.docx\n"
          "  g4d status ./test/doc1.docx\n"
-         "  g4d log --oneline ./test/doc1.docx\n\n"
+         "  g4d log --oneline ./test/doc1.docx\n"
+         "  g4d reset --hard 77068a546b9a0d30b675ad6854b104dd5376e91d "
+         "./test/doc1.docx\n\n"
          "\nBTW, we currently only support .doc or .docx files.\n");
 }
 
@@ -96,6 +100,19 @@ void cmd_log(int argc, char *argv[]) {
   fs::remove_all(docFile._tmpPath);
 }
 
+void cmd_reset(int argc, char *argv[]) {
+  GitForDoc docFile = GitForDoc(argv[argc - 1]);
+  std::string cmd = "git reset ";
+  for (int i = 2; i < argc - 1; i++) {
+    cmd = cmd + argv[i] + " ";
+  }
+  printVecStr(runCmdAndReceOutput(
+      "cd %s && %s", docFile._gitPath.parent_path().c_str(), cmd.c_str()));
+  docFile.zipToDoc();
+
+  fs::remove_all(docFile._tmpPath);
+}
+
 int main(int argc, char *argv[]) {
   if (argc <= 2) {
     cmd_help();
@@ -123,5 +140,10 @@ int main(int argc, char *argv[]) {
   if (argc >= 3 && !std::strcmp(argv[1], "log")) {
     cmd_log(argc, argv);
   }
+
+  if (argc >= 3 && !std::strcmp(argv[1], "reset")) {
+    cmd_reset(argc, argv);
+  }
+
   return 0;
 }
