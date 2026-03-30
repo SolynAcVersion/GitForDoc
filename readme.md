@@ -2,7 +2,7 @@
 
 A CLI git version controlling framework for documents like `.doc` or `.docx` files.
 
-The library for the upcoming ImGui UI version of doc's version controlling software.
+The library for the upcoming *ImGui* UI version of doc's version controlling software.
 
 Validated under *Manjaro*, not sure if satisfying *Windows*.
 
