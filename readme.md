@@ -13,17 +13,18 @@ We actually unzip the doc file and format the `xml` files in the `{fileName}` fo
 ## Current state 
 
 - Version controlling for single `.doc` or `.docx` file
-- git `init` / `add` / `commit` / `diff` / `status` / `reset`
+- git `init` / `add` / `commit` / `diff` / `status` / `log` / `reset` / `revert`
 - Support for most *Linux* Systems
 - Raw output of commands `diff` for changes
+- Origin parser by UNIX
 
 
 ## WIP 
 
 - Cross-platform support
-- full `git` commands
+- git commands related to `branch`
 - Smart analysis of what really changed in doc, not xml in the unzipped one.
-
+- Smarter args parser.
 
 ## External commands used:
 
