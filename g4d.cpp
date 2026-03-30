@@ -68,16 +68,20 @@ void cmd_help() {
          "  log [options] <document>              Show commit history\n"
          "  reset [options] <commit> <document>   Reset to one commit\n"
          "  revert [options] <commit> <document>  Revert a commit\n\n"
+         "Note: If your file path contains spaces or special characters, or "
+         "you need to use quote for messages, use \\ before them.\n\n"
          "Examples:\n"
+         "  g4d commit -m \\\"commit\\ with \\space\\\"\n\n"
+         "Usage Examples:\n"
          "  g4d init ./test/doc1.docx\n"
          "  g4d file ./test/doc1.docx\n"
          "  g4d diff ./test/doc1.docx\n"
          "  g4d add document.xml ./test/doc1.docx\n"
-         "  g4d commit -m \"Initial commit\" ./test/doc1.docx\n"
+         "  g4d commit -m \\\"Initial\\ commit\\\" ./test/doc1.docx\n"
          "  g4d status ./test/doc1.docx\n"
          "  g4d log --oneline ./test/doc1.docx\n"
          "  g4d reset --hard 77068a546b9a0d30b675ad6854b104dd5376e91d "
-         "./test/doc1.docx\n\n"
+         " (after using g4d file for pointing out the specific file)\n\n"
          "BTW, we currently only support .doc or .docx files.\n");
 }
 
@@ -109,7 +113,7 @@ void cmd_add(int argc, char *argv[]) {
   for (int i = 2; i < argc - 1; i++)
     cmd = cmd + argv[i] + " ";
   printVecStr(runCmdAndReceOutput(
-      "cd %s && %s.tmp", docFile._gitPath.parent_path().c_str(), cmd.c_str()));
+      "cd %s && %s .tmp", docFile._gitPath.parent_path().c_str(), cmd.c_str()));
   fs::remove_all(docFile._tmpPath);
 }
 
@@ -120,7 +124,7 @@ void cmd_commit(int argc, char *argv[]) {
   for (int i = 2; i < argc - 1; i++)
     cmd = cmd + argv[i] + " ";
   printVecStr(runCmdAndReceOutput(
-      "cd %s && %s.tmp", docFile._gitPath.parent_path().c_str(), cmd.c_str()));
+      "cd %s && %s .tmp", docFile._gitPath.parent_path().c_str(), cmd.c_str()));
   fs::remove_all(docFile._tmpPath);
 }
 
@@ -147,6 +151,7 @@ void cmd_log(int argc, char *argv[]) {
 }
 
 void cmd_reset(int argc, char *argv[]) {
+
   checkDocPath(argv[argc - 1]);
   GitForDoc docFile = GitForDoc(argv[argc - 1]);
   std::string cmd = "git reset ";
@@ -196,11 +201,12 @@ int main(int argc, char *argv[]) {
       return 0;
     }
 
+    int no_path = 0;
     std::string docPath;
     docPath = argv[argc - 1];
     if (!fs::exists(docPath)) {
       docPath = readDefaultDoc();
-
+      no_path = 1;
       if (docPath.empty())
         throw std::runtime_error("No document specified and no default set.");
       std::cout << "Path " + std::string(argv[argc - 1]) +
@@ -212,8 +218,12 @@ int main(int argc, char *argv[]) {
     std::vector<char *> new_argv;
     for (int i = 0; i < argc - 1; ++i)
       new_argv.push_back(argv[i]);
+    if (no_path) {
+      new_argv.push_back(argv[argc - 1]);
+    }
     new_argv.push_back(const_cast<char *>(docPath.c_str()));
     new_argv.push_back(nullptr);
+
     int new_argc = new_argv.size() - 1;
     if (!std::strcmp(argv[1], "diff"))
       cmd_diff(new_argc, new_argv.data());
